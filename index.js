@@ -2,12 +2,14 @@
 
 /* global cuid */
 
-const STORE = [
-  {id: cuid(), name: 'apples', checked: false},
-  {id: cuid(), name: 'oranges', checked: false},
-  {id: cuid(), name: 'milk', checked: true},
-  {id: cuid(), name: 'bread', checked: false},
-];
+const STORE = {
+  items: [
+    {id: cuid(), name: 'apples', checked: false},
+    {id: cuid(), name: 'oranges', checked: false},
+    {id: cuid(), name: 'milk', checked: true},
+    {id: cuid(), name: 'bread', checked: false}],
+  hideChecked: false,
+};
 
 function generateItemElement(item){
   return `<li class="js-item-index-element" data-item-id="${item.id}">
@@ -30,7 +32,11 @@ function  generateShoppingItemsString(shoppingList){
 
 function renderShoppingList() {
   console.log('rendering shopping list');
-  const shoppingListString = generateShoppingItemsString(STORE);
+  let filteredItems = STORE.items;
+  if (STORE.hideChecked) {
+    filteredItems = filteredItems.filter(item => !item.checked);
+  }
+  const shoppingListString = generateShoppingItemsString(filteredItems);
   $('.js-shopping-list').html(shoppingListString);
 
 }
@@ -38,7 +44,7 @@ function renderShoppingList() {
 function addItemToShoppingList(itemName){
   console.log(`Adding "${itemName} to shopping list"`);
   if (itemName !== '') {
-    STORE.push({id: cuid(), name: itemName, checked: false});
+    STORE.items.push({id: cuid(), name: itemName, checked: false});
   }
 }
 
@@ -55,7 +61,7 @@ function handleNewItemSubmit() {
 }
 function toggleCheckedForListItem(itemId) {
   console.log(`Toggling checked property for item with with id ${itemId}.`);
-  const item = STORE.find(item => item.id === itemId);
+  const item = STORE.items.find(item => item.id === itemId);
   item.checked = !item.checked;
 }
 
@@ -64,9 +70,8 @@ function getItemIdFromElement(item) {
 }
 
 function deleteItem(itemId) {
-  // const item = STORE.find(item => item.id === itemId);
-  const index = STORE.findIndex(item => item.id === itemId);
-  STORE.splice(index, 1);
+  const index = STORE.items.findIndex(item => item.id === itemId);
+  STORE.items.splice(index, 1);
 }
 function handleItemCheckClicked() {
   console.log('handling checked items');
@@ -90,11 +95,20 @@ function handleDeleteItemClicked() {
 
 }
 
+function handleCheckBoxClicked() {
+  $('#hide-checked').on('click', () => {
+    STORE.hideChecked = !STORE.hideChecked;
+    renderShoppingList();
+    console.log('check box clicked');
+  });
+}
+
 function main() {
   renderShoppingList();
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
+  handleCheckBoxClicked();
 }
 
 $(main);
