@@ -65,8 +65,13 @@ function handleNewItemSubmit() {
 function handleSearch() {
   $('#js-shopping-list-search-form').submit(function(event){
     event.preventDefault();
-    console.log($('.js-shopping-list-search').val());
-    STORE.searchTerm = $('.js-shopping-list-search').val();
+    const searchOrReset = document.activeElement.innerHTML;
+    if (searchOrReset === 'Search') {
+      STORE.searchTerm = $('.js-shopping-list-search').val();
+    } else {
+      STORE.searchTerm = '';
+      $('.js-shopping-list-search').val('');
+    }
     renderShoppingList();
   });
 }
