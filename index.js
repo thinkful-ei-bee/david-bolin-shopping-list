@@ -34,8 +34,21 @@ function renderShoppingList() {
 
 }
 
+function addItemToShoppingList(itemName){
+  console.log(`Adding "${itemName} to shopping list"`);
+  STORE.push({name: itemName, checked: false});
+}
+
 function handleNewItemSubmit() {
-  console.log('handling new items');
+  $('#js-shopping-list-form').submit(function(event){
+    event.preventDefault();
+    const newItemName= $(`.js-shopping-list-entry`).val();
+    console.log('handling new items');
+    $('.js-shopping-list-entry').val('');
+    addItemToShoppingList(newItemName);
+    renderShoppingList();
+  });
+  
 }
 
 function handleItemCheckClicked() {
