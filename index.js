@@ -51,7 +51,7 @@ function addItemToShoppingList(itemName){
 }
 
 function handleNewItemSubmit() {
-  $('#js-shopping-list-form #js-shopping-list-entry').submit(function(event){
+  $('#js-shopping-list-form').submit(function(event){
     event.preventDefault();
     const newItemName= $('.js-shopping-list-entry').val();
     console.log('handling new items');
@@ -61,6 +61,16 @@ function handleNewItemSubmit() {
   });
   
 }
+
+function handleSearch() {
+  $('#js-shopping-list-search-form').submit(function(event){
+    event.preventDefault();
+    console.log($('.js-shopping-list-search').val());
+    STORE.searchTerm = $('.js-shopping-list-search').val();
+    renderShoppingList();
+  });
+}
+
 function toggleCheckedForListItem(itemId) {
   console.log(`Toggling checked property for item with with id ${itemId}.`);
   const item = STORE.items.find(item => item.id === itemId);
@@ -103,9 +113,6 @@ function handleCheckBoxClicked() {
     renderShoppingList();
     console.log('check box clicked');
   });
-}
-
-function handleSearch() {
 }
 
 function main() {
