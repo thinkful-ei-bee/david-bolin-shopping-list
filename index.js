@@ -1,5 +1,7 @@
 'use strict';
 
+/* global cuid */
+
 const STORE = [
   {id: cuid(), name: 'apples', checked: false},
   {id: cuid(), name: 'oranges', checked: false},
@@ -9,7 +11,7 @@ const STORE = [
 
 function generateItemElement(item){
   return `<li class="js-item-index-element" data-item-id="${item.id}">
-  <span class="shopping-item js-shopping-item ${item.checked ? "shopping-item__checked" : ''}">${item.name}</span>
+  <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
   <div class="shopping-item-controls">
     <button class="shopping-item-toggle js-item-toggle">
         <span class="button-label">check</span>
@@ -29,7 +31,6 @@ function  generateShoppingItemsString(shoppingList){
 function renderShoppingList() {
   console.log('rendering shopping list');
   const shoppingListString = generateShoppingItemsString(STORE);
-
   $('.js-shopping-list').html(shoppingListString);
 
 }
@@ -44,7 +45,7 @@ function addItemToShoppingList(itemName){
 function handleNewItemSubmit() {
   $('#js-shopping-list-form').submit(function(event){
     event.preventDefault();
-    const newItemName= $(`.js-shopping-list-entry`).val();
+    const newItemName= $('.js-shopping-list-entry').val();
     console.log('handling new items');
     $('.js-shopping-list-entry').val('');
     addItemToShoppingList(newItemName);
