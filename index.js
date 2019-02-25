@@ -22,6 +22,9 @@ function generateItemElement(item){
     <button class="shopping-item-delete js-item-delete">
         <span class="button-label">delete</span>
     </button>
+    <button class="shopping-item-edit js-item-edit">
+        <span class="button-label">edit</span>
+    </button>
   </div>
 </li>`;
 }
@@ -120,6 +123,16 @@ function handleCheckBoxClicked() {
   });
 }
 
+function handleEdit() {
+  $('.js-shopping-list').on('click', '.js-item-edit', event => {
+    const newName = prompt('Enter new item name:');
+    const itemId = getItemIdFromElement(event.currentTarget);
+    const item = STORE.items.find(item => item.id === itemId);
+    item.name = newName;
+    renderShoppingList();
+  });
+}
+
 function main() {
   renderShoppingList();
   handleNewItemSubmit();
@@ -127,6 +140,7 @@ function main() {
   handleDeleteItemClicked();
   handleCheckBoxClicked();
   handleSearch();
+  handleEdit();
 }
 
 $(main);
