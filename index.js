@@ -7,9 +7,22 @@ const STORE = [
   {name: 'bread', checked: false},
 ];
 
+function generateItemElement(item, itemIndex, template){
+  return `<li>${item.name}</li>`;
+}
+
+function  generateShoppingItemsString(shoppingList){
+    const items= shoppingList.map((item, index) => generateItemElement(item, index));
+    console.log(items.join());
+    return items.join('');
+}
 
 function renderShoppingList() {
   console.log('rendering shopping list');
+  const shoppingListString = generateShoppingItemsString(STORE);
+
+  $(".js-shopping-list").html(shoppingListString);
+
 }
 
 function handleNewItemSubmit() {
