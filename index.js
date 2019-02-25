@@ -9,6 +9,7 @@ const STORE = {
     {id: cuid(), name: 'milk', checked: true},
     {id: cuid(), name: 'bread', checked: false}],
   hideChecked: false,
+  searchTerm: ''
 };
 
 function generateItemElement(item){
@@ -33,6 +34,7 @@ function  generateShoppingItemsString(shoppingList){
 function renderShoppingList() {
   console.log('rendering shopping list');
   let filteredItems = STORE.items;
+  filteredItems = filteredItems.filter(item => item.name.includes(STORE.searchTerm));
   if (STORE.hideChecked) {
     filteredItems = filteredItems.filter(item => !item.checked);
   }
@@ -49,7 +51,7 @@ function addItemToShoppingList(itemName){
 }
 
 function handleNewItemSubmit() {
-  $('#js-shopping-list-form').submit(function(event){
+  $('#js-shopping-list-form #js-shopping-list-entry').submit(function(event){
     event.preventDefault();
     const newItemName= $('.js-shopping-list-entry').val();
     console.log('handling new items');
@@ -103,12 +105,16 @@ function handleCheckBoxClicked() {
   });
 }
 
+function handleSearch() {
+}
+
 function main() {
   renderShoppingList();
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleCheckBoxClicked();
+  handleSearch();
 }
 
 $(main);
