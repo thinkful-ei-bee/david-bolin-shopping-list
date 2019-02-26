@@ -155,7 +155,9 @@ function handleEditSubmit() {
     const newItemName= $('.js-new-name').val();
     console.log('renaming item');
     const item = STORE.items.find(item => item.id === STORE.editingItem);
-    item.name = newItemName;
+    if (newItemName !== '') {
+      item.name = newItemName;
+    }
     clearEdit();
     renderShoppingList();
   });
